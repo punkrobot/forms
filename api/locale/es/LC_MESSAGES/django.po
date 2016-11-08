@@ -1,0 +1,107 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-08 13:48-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\api\models.py:17 .\api\models.py:23
+msgid "Text"
+msgstr "Texto"
+
+#: .\api\models.py:18 .\api\models.py:24
+msgid "List"
+msgstr "Lista"
+
+#: .\api\models.py:19
+msgid "Table"
+msgstr "Tabla"
+
+#: .\api\models.py:25
+msgid "Radio"
+msgstr "Radio"
+
+#: .\api\models.py:26
+msgid "Checkbox"
+msgstr "Checkbox"
+
+#: .\api\models.py:30
+msgid "Editable"
+msgstr "Editable"
+
+#: .\api\models.py:31
+msgid "Active"
+msgstr "Activa"
+
+#: .\api\models.py:32
+msgid "Closed"
+msgstr "Cerrada"
+
+#: .\api\models.py:35
+msgid "name"
+msgstr "nombre"
+
+#: .\api\models.py:36
+msgid "description"
+msgstr "descripción"
+
+#: .\api\models.py:37
+msgid "status"
+msgstr "status"
+
+#: .\api\models.py:38 .\api\models.py:53
+msgid "user"
+msgstr "usuario"
+
+#: .\api\models.py:40
+msgid "contents"
+msgstr "contenido"
+
+#: .\api\models.py:43 .\api\models.py:52
+msgid "form"
+msgstr "formulario"
+
+#: .\api\models.py:44
+msgid "forms"
+msgstr "formularios"
+
+#: .\api\models.py:56 .\api\models.py:69
+msgid "form response"
+msgstr "respuesta"
+
+#: .\api\models.py:57
+msgid "form responses"
+msgstr "respuestas"
+
+#: .\api\models.py:65
+msgid "code"
+msgstr "código"
+
+#: .\api\models.py:66
+msgid "question"
+msgstr "pregunta"
+
+#: .\api\models.py:67
+msgid "answer"
+msgstr "respuesta"
+
+#: .\api\models.py:72
+msgid "response"
+msgstr "respuesta"
+
+#: .\api\models.py:73
+msgid "responses"
+msgstr "respuestas"

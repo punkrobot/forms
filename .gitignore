@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django stuff:
+*.log
+/media
+/static
+
+# Temp files
+Thumbs.db
+.DS_Store
+.tmp
+
+# Translations
+*.mo
+
+# IDE
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# DB
+*.sqlite3
+
+# Production settings
+forms/settings/prod.py
