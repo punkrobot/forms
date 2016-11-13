@@ -1,0 +1,44 @@
+{
+  "name": "forms",
+  "version": "1.0.0",
+  "description": "App for building and publishing forms",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/punkrobot/forms.git"
+  },
+  "author": "Juan M. Rodriguez",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-transform-class-properties": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.11.1",
+    "css-loader": "^0.25.0",
+    "exports-loader": "^0.6.3",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "imports-loader": "^0.6.5",
+    "react": "^15.3.2",
+    "redux-devtools": "^3.3.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2",
+    "webpack-bundle-tracker": "git+https://github.com/alexhayes/webpack-bundle-tracker.git",
+    "webpack-dev-server": "^1.16.1"
+  },
+  "dependencies": {
+    "es6-promise": "^4.0.3",
+    "react-addons-update": "^15.3.2",
+    "react-bootstrap": "^0.30.3",
+    "react-dom": "^15.3.2",
+    "react-notification": "^6.2.1",
+    "react-redux": "^4.4.5",
+    "react-router": "^3.0.0",
+    "redux": "^3.6.0",
+    "whatwg-fetch": "^1.0.0"
+  },
+  "scripts": {
+    "build": "webpack --config config/webpack.local.config.js --progress --colors",
+    "build-production": "webpack --config config/webpack.prod.config.js --progress --colors",
+    "watch": "node ./config/server.js"
+  }
+}

@@ -1,0 +1,9 @@
+# Temp files
+Thumbs.db
+.DS_Store
+.tmp
+
+# NPM packages folder.
+node_modules/
+/config/webpack-stats-local.json
+/static/bundles/local/

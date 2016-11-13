@@ -1,0 +1,14 @@
+{% extends 'web/base.html' %}
+{% load staticfiles %}
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
+  <div id="form-builder" class="center-block"></div>
+
+  <script type="text/javascript">
+    var form_id = {{ form.id | default:0 }};
+  </script>
+
+  {% render_bundle 'vendors' %}
+  {% render_bundle 'builder' %}
+{% endblock %}

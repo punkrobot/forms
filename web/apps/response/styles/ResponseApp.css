@@ -1,0 +1,75 @@
+body {
+    background-color: #F1F3F6;
+}
+
+fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], input[type=checkbox].disabled, input[type=checkbox][disabled], input[type=radio].disabled, input[type=radio][disabled] {
+    cursor: default;
+}
+
+.navbar-default {
+    background-color: #FFF;
+}
+
+
+.panel-title {
+    margin-top: 6px;
+    margin-bottom: 0;
+    margin-left: 6px;
+    font-size: 20px;
+}
+
+
+#form-response {
+    background: #FEFEFE;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    margin-bottom: 10px;
+    width: 900px;
+}
+
+.required {
+    margin-left: 2px;
+    color: #db4437;
+}
+
+.element {
+    padding: 20px 20px 5px 20px;
+}
+
+
+.list-field {
+    margin-bottom: 15px;
+}
+
+.table {
+    margin-bottom: 15px;
+}
+
+.table th {
+    text-align: center;
+}
+
+.sub-question {
+    padding-top: 15px !important;
+}
+
+.header {
+    margin-bottom: 15px;
+}
+
+.cell-input {
+    height: 20px;
+    margin-top: 7px !important;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.cell-input:focus,
+.cell-input:active {
+    border: none;
+    box-shadow: none;
+}
+
+.form-footer {
+    padding: 20px;
+}

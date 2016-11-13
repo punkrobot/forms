@@ -1,0 +1,14 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="alert alert-warning" role="alert">
+      <form action="" method="post">
+        {% csrf_token %}
+        <h3>¿Eliminar el formulario {{ form.name }}?</h3><br>
+        <button class="btn btn-default" onclick="window.history.back()">Cancelar</button>
+        <input class="btn btn-danger" type="submit" value="Confirmar" />
+      </form>
+    </div>
+  </div>
+{% endblock %}
