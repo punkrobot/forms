@@ -14,16 +14,18 @@ from django.utils.translation import ugettext_lazy as _
 @python_2_unicode_compatible
 class Form(TimeStampedModel):
     QUESTION_TYPES = (
+        ('header', _('Header')),
         ('text', _('Text')),
         ('list', _('List')),
-        ('table', _('Table'))
+        ('table', _('Table')),
+        ('file', _('File'))
     )
 
     COLUMN_TYPES = (
         ('text', _('Text')),
         ('list', _('List')),
         ('radio', _('Radio')),
-        ('check', _('Checkbox'))
+        ('checkbox', _('Checkbox'))
     )
 
     FORM_STATUS = Choices(
@@ -65,6 +67,7 @@ class Response(models.Model):
     code = models.CharField(_('code'), max_length=10)
     question = models.CharField(_('question'), max_length=255)
     answer = models.CharField(_('answer'), max_length=255, blank=True)
+    label = models.CharField(_('label'), max_length=255, blank=True)
 
     form_response = models.ForeignKey(FormResponse, verbose_name=_('form response'))
 
@@ -74,3 +77,12 @@ class Response(models.Model):
 
     def __str__(self):
         return self.answer
+
+
+class ResponseFile(models.Model):
+    file = models.FileField(verbose_name=_('file'))
+    response = models.ForeignKey(Response, verbose_name=_('response'))
+
+    class Meta:
+        verbose_name = _('file')
+        verbose_name_plural = _('files')

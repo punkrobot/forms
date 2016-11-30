@@ -45,7 +45,8 @@ fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], i
     margin-bottom: 15px;
 }
 
-.text-question {
+.text-question,
+.file-input {
     padding-bottom: 15px;
 }
 
@@ -81,6 +82,15 @@ fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], i
 
 .condition label {
     margin-top: 6px;
+}
+
+.file-input label {
+    margin-top: 6px;
+}
+
+.file-input .checkbox {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .form-footer {

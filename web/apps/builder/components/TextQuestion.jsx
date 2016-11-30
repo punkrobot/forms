@@ -58,7 +58,7 @@ class TextQuestion extends React.Component {
 
   onConditionUpdateHandler = (e) => {
     this.props.updateQuestion(update(this.props.question, {
-      condition: { question_key: { $set: parseInt(e.target.value) } }
+      condition: { question_key: { $set: e.target.value } }
     }))
   }
 
@@ -86,13 +86,13 @@ class TextQuestion extends React.Component {
     if(this.props.question.conditional){
       let questions = this.props.questions.map(question => {
         if(question.type === "list") {
-          return <option key={question.key} value={question.key}>{question.code + ". " + question.question}</option>
+          return <option key={question.key} value={question.code}>{question.code + ". " + question.question}</option>
         }
       })
 
       let choices = ""
       if(this.props.question.condition.question_key != 0) {
-        let question = this.props.questions.filter(q => q.key === this.props.question.condition.question_key)[0]
+        let question = this.props.questions.filter(q => q.code === this.props.question.condition.question_key)[0]
         choices = question.choices.map(choice => {
           return <option key={choice.key} value={choice.value}>{choice.text}</option>
         })

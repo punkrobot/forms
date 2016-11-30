@@ -6,6 +6,7 @@ body {
     background-color: #FFF;
 }
 
+
 /* List */
 
 .panel-title {
@@ -13,4 +14,11 @@ body {
     margin-bottom: 0;
     margin-left: 6px;
     font-size: 20px;
+}
+
+
+/* Detail */
+
+.thumbnail {
+    margin-bottom: 5px;
 }

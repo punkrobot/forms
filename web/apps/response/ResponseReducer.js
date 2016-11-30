@@ -16,6 +16,7 @@ let initialState = {
     id: 0,
     answers: []
   },
+  upload: [],
   status: {
     is_fetching: false,
     message: ""
@@ -31,18 +32,7 @@ export default function responseReducer(state = initialState, action) {
       let newAnswer = update(state.response.answers[i], { $merge: action.answer});
       state = update(state, {
         response: {
-          answers: {$splice: [[i, 1, newAnswer]]}
-        }
-      })
-      break
-    
-    case "set_fetching":
-      state = update(state, {
-        status: {
-          is_fetching: { $set: true },
-          success: { $set: false },
-          error: { $set: false },
-          message: { $set: "" }
+          answers: { $splice: [[i, 1, newAnswer]] }
         }
       })
       break
@@ -74,9 +64,15 @@ export default function responseReducer(state = initialState, action) {
                 }
               })
             } else {
-              addAnswer(subQuestion.value, subQuestion.text, "", subQuestion.required)
+              if(question.columns[0].type !== "check") {
+                addAnswer(subQuestion.value, subQuestion.text, "", subQuestion.required)
+              } else {
+                addAnswer(subQuestion.value, subQuestion.text, "n", subQuestion.required)
+              }
             }
           })
+        } else if(question.type === "file"){
+          addAnswer(question.code, question.question, "", question.required)
         }
       })
       state = update(state, {
@@ -87,7 +83,7 @@ export default function responseReducer(state = initialState, action) {
         validation: { $set: validation },
         status: {
           is_fetching: { $set: false },
-          message: { $set: "Encuesta cargada." }
+          //message: { $set: "Encuesta cargada." }
         }
       })
       break
@@ -117,7 +113,7 @@ export default function responseReducer(state = initialState, action) {
         },
         status: {
           is_fetching: { $set: false },
-          message: { $set: "Respuestas guardadas" }
+          message: { $set: "Registro guardado" }
         }
       })
       break
@@ -131,7 +127,24 @@ export default function responseReducer(state = initialState, action) {
       })
       break
 
-    case "status_show_notification":
+    case "file_upload_success":
+      state = update(state, {
+        status: {
+          is_fetching: { $set: false },
+          message: { $set: "Archivo cargado exitosamente" }
+        }
+      })
+      break
+
+    case "set_fetching":
+      state = update(state, {
+        status: {
+          is_fetching: { $set: action.is_fetching }
+        }
+      })
+      break
+
+    case "status_update_notification":
       state = update(state, {
         status: {
           message: { $set: action.message }
@@ -139,13 +152,6 @@ export default function responseReducer(state = initialState, action) {
       })
       break
 
-    case "status_dismiss_notification":
-      state = update(state, {
-        status: {
-          message: { $set: "" }
-        }
-      })
-      break
   }
 
   return state

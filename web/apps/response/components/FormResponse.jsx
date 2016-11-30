@@ -7,13 +7,14 @@ import { Notification } from "react-notification"
 import TextField from "./../../shared/TextField"
 import ListField from "./ListField"
 import TableField from "./TableField"
+import FileInputField from "./FileInputField"
 import Utils from "./../../shared/Utils"
 
 
 class FormResponse extends React.Component {
 
   getForm() {
-    this.props.dispatchSetFetching()
+    this.props.dispatchUpdateFetching(true)
 
     fetch(`/api/forms/${form_id}/?format=json`, { credentials: "same-origin"})
       .then(response => response.json())
@@ -28,30 +29,31 @@ class FormResponse extends React.Component {
   }
 
   validateForm() {
-    var validation = this.props.validation
+    let validation = this.props.validation
     return !this.props.response.answers.some(function(answer) {
-      var value = answer.answer.trim()
+      let value = answer.answer.trim()
       return answer.code in validation && validation[answer.code].required
         && ( value === "" || value === "0" )
     })
   }
 
   postFormResponse = () => {
-    if(!this.validateForm()) {
+    /*if(!this.validateForm()) {
       this.props.dispatchShowNotifications("Error. Capture los campos obligatorios.")
       return
-    }
+    }*/
 
-    this.props.dispatchSetFetching()
+    this.props.dispatchUpdateFetching(true)
 
     let newFormResponse = this.props.response.id === 0,
       url = newFormResponse ? "/api/responses/" : `/api/responses/${this.props.response.id}/`
 
-    var responseData = {
+    const responseData = {
       id: this.props.response.id,
       form: this.props.form.id,
       answers: this.props.response.answers
     }
+
     fetch(url, {
       method: newFormResponse ? "POST" : "PUT",
       credentials: "same-origin",
@@ -63,11 +65,40 @@ class FormResponse extends React.Component {
       body: JSON.stringify(responseData)
     }).then(response => response.json())
       .then(data => this.props.dispatchPostSurveyResponseSuccess(data))
+      .then(this.postFormFiles)
       .catch(error => this.props.dispatchPostSurveyResponseError())
+
+  }
+
+  postFormFiles = () => {
+    this.props.form.contents.questions.forEach(question => {
+      if(question.type === "file") {
+        this.props.dispatchUpdateFetching(true)
+        const answer = this.props.response.answers.filter(answer => answer.code === question.code)[0]
+
+        this.refs[`file${question.key}`].getWrappedInstance().state.files.forEach(file => {
+          let data = new FormData()
+          data.append('file', file)
+          data.append('response', answer.id)
+
+          fetch("/api/files/", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+              "Accept": "application/json",
+              "X-CSRFToken": Utils.getCookie("csrftoken")
+            },
+            body: data
+          }).then(response => response.json())
+            .then(data => this.props.dispatchFileUploadSuccess())
+            .catch(error => this.props.dispatchPostSurveyResponseError())
+        })
+      }
+    })
   }
 
   dismissNotificationHandler = () => {
-    this.props.dispatchDismissNotifications()
+    this.props.dispatchUpdateNotification("")
   }
 
   updateTextHandler = (code, text) => {
@@ -78,9 +109,11 @@ class FormResponse extends React.Component {
   }
 
   render() {
-    var questions = this.props.form.contents.questions.map(question => {
+    let questions = this.props.form.contents.questions.map(question => {
       if(question.conditional){
-        let answer = this.props.response.answers.filter(answer => answer.code == question.condition.question_key)[0]
+        let answer = this.props.response.answers.filter(
+          answer => answer.code == question.condition.question_key
+        )[0]
         if(answer && question.condition.question_value === answer.answer){
           return
         }
@@ -106,6 +139,9 @@ class FormResponse extends React.Component {
       } else if (question.type === "table") {
         return <TableField key={question.key} question={question}/>
 
+      } else if (question.type === "file") {
+        return <FileInputField ref={`file${question.key}`} key={question.key} question={question}/>
+
       }
     })
     return (
@@ -118,6 +154,7 @@ class FormResponse extends React.Component {
         <Notification
           isActive={this.props.status.message.length > 0}
           message={this.props.status.message}
+          dismissAfter={3000}
           onDismiss={this.dismissNotificationHandler} />
       </div>
     )
@@ -150,24 +187,24 @@ const FormResponseDispatch = (dispatch) => {
     dispatchGetSurveyError: () => {
       dispatch({ type: "get_form_error" })
     },
-    dispatchPostSurveyResponseSuccess: (id, answers) => {
+    dispatchPostSurveyResponseSuccess: (data) => {
       dispatch({
         type: "post_response_success",
-        id: id,
-        answers: answers
+        id: data.id,
+        answers: data.answers
       })
     },
     dispatchPostSurveyResponseError: () => {
       dispatch({ type: "post_response_error" })
     },
-    dispatchSetFetching: () => {
-      dispatch({ type: "set_fetching" })
+    dispatchFileUploadSuccess: () => {
+      dispatch({ type: "file_upload_success" })
     },
-    dispatchShowNotifications: (message) => {
-      dispatch({ type: "status_show_notification", message: message })
+    dispatchUpdateFetching: (isFetching) => {
+      dispatch({ type: "set_fetching", is_fetching: isFetching })
     },
-    dispatchDismissNotifications: () => {
-      dispatch({ type: "status_dismiss_notification" })
+    dispatchUpdateNotification: (message) => {
+      dispatch({ type: "status_update_notification", message: message })
     }
   }
 }

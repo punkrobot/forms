@@ -12,6 +12,7 @@ import Header from "./Header"
 import TextQuestion from "./TextQuestion"
 import ListQuestion from "./ListQuestion"
 import TableQuestion from "./TableQuestion"
+import FileInput from "./FileInput"
 import Utils from "./../../shared/Utils"
 
 
@@ -90,6 +91,15 @@ class Form extends React.Component {
     this.props.dispatchAddQuestion(question)
   }
 
+  addFileInputHandler = () => {
+    let question = this.getNewQuestion("file")
+    question.multiple = false
+    question.lebel = "Archivo"
+    question.file_type = "file"
+    question.mime_type = "*/*"
+    this.props.dispatchAddQuestion(question)
+  }
+
   addHeaderHandler = () => {
     this.props.dispatchAddQuestion({
       key: this.props.form.contents.next_id,
@@ -145,6 +155,13 @@ class Form extends React.Component {
           </TextQuestion>
         )
 
+      } else if(question.type === "file") {
+        return(
+          <TextQuestion key={question.key} question={question} showRequired>
+            <FileInput question={question} />
+          </TextQuestion>
+        )
+
       } else {
         return ""
       }
@@ -155,19 +172,31 @@ class Form extends React.Component {
                    text={this.props.form.name} updateText={this.updateTextHandler} />
 
         <TextField code="description" label="Descripción"
-                   text={this.props.form.description} textarea updateText={this.updateTextHandler} />
+                   text={this.props.form.description} textarea
+                   updateText={this.updateTextHandler} />
 
         {questions}
 
         <div ref="buttonBar" className="form-footer">
           <ButtonToolbar>
             <ButtonGroup>
-              <Button bsStyle="primary" onClick={this.addTextQuestionHandler}><Glyphicon glyph="font" /> Texto</Button>
-              <Button bsStyle="primary" onClick={this.addListQuestionHandler}><Glyphicon glyph="list" /> Lista</Button>
-              <Button bsStyle="primary" onClick={this.addTableQuestionHandler}><Glyphicon glyph="th" /> Tabla</Button>
+              <Button bsStyle="primary" onClick={this.addHeaderHandler}>
+                <Glyphicon glyph="header" /> Encabezado
+              </Button>
             </ButtonGroup>
             <ButtonGroup>
-              <Button bsStyle="primary" onClick={this.addHeaderHandler}><Glyphicon glyph="header" /> Encabezado</Button>
+              <Button bsStyle="primary" onClick={this.addTextQuestionHandler}>
+                <Glyphicon glyph="font" /> Texto
+              </Button>
+              <Button bsStyle="primary" onClick={this.addListQuestionHandler}>
+                <Glyphicon glyph="list" /> Lista
+              </Button>
+              <Button bsStyle="primary" onClick={this.addTableQuestionHandler}>
+                <Glyphicon glyph="th" /> Tabla
+              </Button>
+              <Button bsStyle="primary" onClick={this.addFileInputHandler}>
+                <Glyphicon glyph="file" /> Archivo
+              </Button>
             </ButtonGroup>
             <ButtonGroup className="pull-right">
               <Button disabled={this.props.status.is_fetching}

@@ -11,6 +11,7 @@ from . import views
 router = DefaultRouter()
 router.register(r'forms', views.FormViewSet)
 router.register(r'responses', views.SurveyResponseViewSet)
+router.register(r'files', views.ResponseFileViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

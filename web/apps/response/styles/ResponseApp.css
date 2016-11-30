@@ -70,6 +70,23 @@ fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], i
     box-shadow: none;
 }
 
+.dropzone {
+    border: 1px dashed #AAA;
+    padding: 20px;
+}
+
+.dropzone:hover {
+    cursor: pointer;
+}
+
+.dropzone .thumbnail {
+    margin-bottom: 5px;
+}
+
+.active-dropzone {
+    border: 2px dashed #222;
+}
+
 .form-footer {
     padding: 20px;
 }

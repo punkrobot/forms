@@ -6,9 +6,11 @@ import { FormControl } from "react-bootstrap"
 class SelectTableCell extends React.Component {
   
   updateValueHandler = (e) => {
+    const label = e.target.options[e.target.selectedIndex].innerHTML
     this.props.updateAnswer({
       code: this.props.code,
-      answer: e.target.value
+      answer: e.target.value,
+      label: label
     })
   }
   

@@ -1,0 +1,53 @@
+{% extends 'web/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="panel-title">Detalle del registro</h3>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <span>Fecha de registro: {{ response.created | date:"d/M/Y H:i" }}</span><br><br>
+            {% for answer in answers %}
+              {{ answer.code }}.{{ answer.question }}:
+              {% if answer.responsefile_set.all %}
+                <div class="row">
+                  {% for file in answer.responsefile_set.all %}
+                    {% if answer.answer == "image" %}
+                      <div class="col-md-4">
+                        <a class="thumbnail" href="{{ file.file.url }}" target="_blank">
+                          <img src="{{ file.file.url }}" class="img-responsive">
+                        </a>
+                      </div>
+                    {% else %}
+                      <div class="col-md-12">
+                        <a href="{{ file.file.url }}" target="_blank">
+                          <span class="glyphicon glyphicon-file">{{ file.file.name }}</span>
+                        </a>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% elif answer.label %}
+                <span>{{ answer.label }}</span><br>
+              {%  else %}
+                <span>{{ answer.answer }}</span><br>
+              {%  endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block css %}
+  <link href="{% static 'web/css/app.css' %}" rel="stylesheet">
+{% endblock %}

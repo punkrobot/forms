@@ -52,7 +52,7 @@ class TableField extends React.Component {
         if(column.type === "text") {
           return <td key={column.key}>
             <InputTableCell type="input" code={subQuestion.value+column.code_suffix}
-                            updateAnswer={this.updateAnswerHandler} />
+                            updateAnswer={this.updateAnswerHandler}  />
           </td>
 
         } else if(column.type === "list"){
@@ -65,15 +65,16 @@ class TableField extends React.Component {
           return column.choices.map(choice => {
             let group = `radio${this.props.question.key}.${subQuestion.key}.${column.key}`
             return <td key={`${column.key}.${choice.key}`}>
-              <InputTableCell type="radio" code={subQuestion.value+column.code_suffix} group={group}
-                              value={choice.value} updateAnswer={this.updateAnswerHandler} />
+              <InputTableCell type="radio" code={subQuestion.value+column.code_suffix}
+                              group={group} value={choice.value} label={choice.text}
+                              updateAnswer={this.updateAnswerHandler} />
             </td>
           })
 
         } else if(column.type === "check"){
           return <td key={column.key}>
             <InputTableCell type="checkbox" code={subQuestion.value+column.code_suffix}
-                            updateAnswer={this.updateAnswerHandler} />
+                            label={column.header} updateAnswer={this.updateAnswerHandler} />
           </td>
         }
       })

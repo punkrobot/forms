@@ -22,3 +22,11 @@ class SurveyResponseViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class ResponseFileViewSet(viewsets.ModelViewSet):
+    queryset = models.ResponseFile.objects.all()
+    serializer_class = serializers.ResponseFileSerializer
+
+    def pre_save(self, obj):
+        obj.file = self.request.FILES.get('file')

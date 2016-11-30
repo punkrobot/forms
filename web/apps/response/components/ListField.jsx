@@ -13,18 +13,19 @@ class ListField extends React.Component {
     super(props)
     this.state = { valid: true }
   }
-  
+
   componentDidMount() {
     this.props.dispatchUpdateValidation(this.props.question.code, true)
   }
   
   componentWillUnmount(){
-    this.props.dispatchUpdateAnswer(this.props.question.code, "")
+    this.props.dispatchUpdateAnswer(this.props.question.code, "", "")
     this.props.dispatchUpdateValidation(this.props.question.code, false)
   }
   
   updateAnswerHandler = (e) => {
-    this.props.dispatchUpdateAnswer(this.props.question.code, e.target.value)
+    const label = e.target.options[e.target.selectedIndex].innerHTML
+    this.props.dispatchUpdateAnswer(this.props.question.code, e.target.value, label)
     this.setState({ valid: e.target.value !== "0" })
   }
 
@@ -51,7 +52,7 @@ class ListField extends React.Component {
     return (
       <div className="element">
         <FormGroup
-          controlId={"question"+this.props.question.code}
+          controlId={`question${this.props.question.code}`}
           className="list-field"
           {...groupComponentProps} >
 
@@ -76,12 +77,13 @@ class ListField extends React.Component {
 
 const ListFieldDispatch = (dispatch) => {
   return {
-    dispatchUpdateAnswer: (code, answer) => {
+    dispatchUpdateAnswer: (code, answer, label) => {
       dispatch({
         type: "update_answer",
         answer: {
           code: code,
-          answer: answer
+          answer: answer,
+          label: label
         }
       })
     },

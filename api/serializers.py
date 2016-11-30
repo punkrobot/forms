@@ -16,7 +16,7 @@ class ResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Response
-        fields = ('id', 'code', 'answer', 'question')
+        fields = ('id', 'code', 'answer', 'question', 'label')
 
 
 class FormResponseSerializer(serializers.ModelSerializer):
@@ -43,3 +43,9 @@ class FormResponseSerializer(serializers.ModelSerializer):
             models.Response.objects.update_or_create(id=answer_data['id'], defaults=answer_data)
 
         return instance
+
+
+class ResponseFileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ResponseFile
+        fields = ('file', 'response')
