@@ -74,7 +74,7 @@ class TableField extends React.Component {
         } else if(column.type === "check"){
           return <td key={column.key}>
             <InputTableCell type="checkbox" code={subQuestion.value+column.code_suffix}
-                            label={column.header} updateAnswer={this.updateAnswerHandler} />
+                            updateAnswer={this.updateAnswerHandler} />
           </td>
         }
       })

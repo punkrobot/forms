@@ -5,6 +5,12 @@ from rest_framework import serializers
 from . import models
 
 
+class SimpleFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Form
+        fields = ('id', 'name')
+
+
 class FormSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Form
@@ -16,7 +22,7 @@ class ResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Response
-        fields = ('id', 'code', 'answer', 'question', 'label')
+        fields = ('id', 'code', 'answer', 'question', 'label', 'related')
 
 
 class FormResponseSerializer(serializers.ModelSerializer):

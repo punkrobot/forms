@@ -50,7 +50,9 @@ class ResponseList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ResponseList, self).get_context_data(**kwargs)
         form_response = models.FormResponse.objects.filter(form_id=self.kwargs.get("pk", None))[:1]
-        context["headers"] = models.Response.objects.filter(form_response=form_response)
+        context["headers"] = models.Response.objects.filter(
+            form_response=form_response
+        ).order_by('code')
 
         return context
 
@@ -62,8 +64,11 @@ class ResponseDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ResponseDetail, self).get_context_data(**kwargs)
-        context["answers"] = models.Response.objects.filter(
-            form_response__pk=self.kwargs.get("pk", None)
-        ).order_by('code')
+
+        form_response_id = self.kwargs.get("pk", None)
+
+        context["related"] = models.FormResponse.objects.filter(
+            response__related=True, response__answer=form_response_id
+        )
 
         return context

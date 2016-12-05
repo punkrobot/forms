@@ -18,12 +18,20 @@ class InputTableCell extends React.Component {
       this.setState({checked: !this.state.checked})
     }
 
-    if(this.props.type === "checkbox" || this.props.type === "radio"){
+    if(this.props.type === "radio") {
       this.props.updateAnswer({
         code: this.props.code,
         answer: value,
         label: this.props.label
       })
+
+    } else if(this.props.type === "checkbox") {
+      this.props.updateAnswer({
+        code: this.props.code,
+        answer: value,
+        label: value === "n" ? "No" : "Sí"
+      })
+
     } else {
       this.props.updateAnswer({
         code: this.props.code,

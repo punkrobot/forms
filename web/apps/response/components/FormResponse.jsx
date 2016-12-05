@@ -8,6 +8,7 @@ import TextField from "./../../shared/TextField"
 import ListField from "./ListField"
 import TableField from "./TableField"
 import FileInputField from "./FileInputField"
+import RelatedField from "./RelatedField"
 import Utils from "./../../shared/Utils"
 
 
@@ -141,6 +142,9 @@ class FormResponse extends React.Component {
 
       } else if (question.type === "file") {
         return <FileInputField ref={`file${question.key}`} key={question.key} question={question}/>
+
+      } else if (question.type === "related") {
+        return <RelatedField key={question.key} question={question}/>
 
       }
     })

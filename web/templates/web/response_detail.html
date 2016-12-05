@@ -11,12 +11,21 @@
           </div>
         </div>
       </div>
-      <div class="panel-body">
+      <div class="panel-body details">
         <div class="row">
-          <div class="col-md-12">
-            <span>Fecha de registro: {{ response.created | date:"d/M/Y H:i" }}</span><br><br>
-            {% for answer in answers %}
-              {{ answer.code }}.{{ answer.question }}:
+          <div class="col-md-3 text-right text-muted">
+            <span>Fecha de registro:</span>
+          </div>
+          <div class="col-md-9">
+            {{ response.created | date:"d/M/Y H:i" }}
+          </div>
+        </div>
+        {% for answer in response.answers %}
+          <div class="row">
+            <div class="col-md-3 text-right text-muted">
+              {{ answer.code }}. {{ answer.question }}
+            </div>
+            <div class="col-md-9">
               {% if answer.responsefile_set.all %}
                 <div class="row">
                   {% for file in answer.responsefile_set.all %}
@@ -36,15 +45,62 @@
                   {% endfor %}
                 </div>
               {% elif answer.label %}
-                <span>{{ answer.label }}</span><br>
+                <span>{{ answer.label }}</span>
               {%  else %}
-                <span>{{ answer.answer }}</span><br>
+                <span>{{ answer.answer }}</span>
               {%  endif %}
-            {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% if related %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="panel-title">Registros relacionados: {{ related.1.form.name }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  {% for answer in related.1.answers %}
+                    <th>{{ answer.question }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for rel in related %}
+                  <tr>
+                    <td>
+                      <a href="{% url 'response.detail' rel.form.pk rel.pk %}">
+                        {{ rel.created | date:"d/M/Y H:i"}}
+                      </a>
+                    </td>
+                    {% for answer in rel.answers %}
+                      <td>
+                        {% if answer.label %}
+                          {{ answer.label }}
+                        {%  else %}
+                          {{ answer.answer }}
+                        {%  endif %}
+                      </td>
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    {% endif %}
   </div>
 {% endblock %}
 

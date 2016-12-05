@@ -22,3 +22,7 @@ body {
 .thumbnail {
     margin-bottom: 5px;
 }
+
+.details .row {
+    margin-bottom: 10px;
+}

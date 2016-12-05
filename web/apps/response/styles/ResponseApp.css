@@ -90,3 +90,8 @@ fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], i
 .form-footer {
     padding: 20px;
 }
+
+.suggetsion {
+    padding: 5px;
+    cursor: pointer;
+}

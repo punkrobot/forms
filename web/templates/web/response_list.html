@@ -35,7 +35,7 @@
                   {{ response.created | date:"d/M/Y H:i"}}
                 </a>
               </td>
-              {% for answer in response.response_set.all %}
+              {% for answer in response.answers %}
                 <td>
                   {% if answer.label %}
                     {{ answer.label }}

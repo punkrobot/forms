@@ -13,6 +13,7 @@ import TextQuestion from "./TextQuestion"
 import ListQuestion from "./ListQuestion"
 import TableQuestion from "./TableQuestion"
 import FileInput from "./FileInput"
+import RelatedFormQuestion from "./RelatedFormQuestion"
 import Utils from "./../../shared/Utils"
 
 
@@ -109,6 +110,14 @@ class Form extends React.Component {
     })
   }
 
+  addRelatedHandler = () => {
+    let question = this.getNewQuestion("related")
+    question.form_id = 0
+    question.form_name = ""
+    question.multiple = false
+    this.props.dispatchAddQuestion(question)
+  }
+
   dismissNotificationHandler = () => {
     this.props.dispatchDismissNotifications()
   }
@@ -162,6 +171,13 @@ class Form extends React.Component {
           </TextQuestion>
         )
 
+      } else if(question.type === "related") {
+        return(
+          <TextQuestion key={question.key} question={question} showRequired>
+            <RelatedFormQuestion question={question}/>
+          </TextQuestion>
+        )
+
       } else {
         return ""
       }
@@ -195,7 +211,12 @@ class Form extends React.Component {
                 <Glyphicon glyph="th" /> Tabla
               </Button>
               <Button bsStyle="primary" onClick={this.addFileInputHandler}>
-                <Glyphicon glyph="file" /> Archivo
+                <Glyphicon glyph="paperclip" /> Archivo
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button bsStyle="primary" onClick={this.addRelatedHandler}>
+                <Glyphicon glyph="link" /> Formulario relacionado
               </Button>
             </ButtonGroup>
             <ButtonGroup className="pull-right">

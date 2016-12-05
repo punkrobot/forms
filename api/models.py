@@ -18,7 +18,8 @@ class Form(TimeStampedModel):
         ('text', _('Text')),
         ('list', _('List')),
         ('table', _('Table')),
-        ('file', _('File'))
+        ('file', _('File')),
+        ('related', _('Related Form'))
     )
 
     COLUMN_TYPES = (
@@ -58,6 +59,9 @@ class FormResponse(TimeStampedModel):
         verbose_name = _('form response')
         verbose_name_plural = _('form responses')
 
+    def answers(self):
+        return self.response_set.order_by('code')
+
     def __str__(self):
         return '%s - %s' % (self.form.name, self.user.username)
 
@@ -68,6 +72,7 @@ class Response(models.Model):
     question = models.CharField(_('question'), max_length=255)
     answer = models.CharField(_('answer'), max_length=255, blank=True)
     label = models.CharField(_('label'), max_length=255, blank=True)
+    related = models.BooleanField(_('realted'), default=False)
 
     form_response = models.ForeignKey(FormResponse, verbose_name=_('form response'))
 

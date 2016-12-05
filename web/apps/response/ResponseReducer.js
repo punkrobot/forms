@@ -28,8 +28,8 @@ export default function responseReducer(state = initialState, action) {
   
   switch(action.type) {
     case "update_answer":
-      const i = state.response.answers.findIndex(a => a.code === action.answer.code);
-      let newAnswer = update(state.response.answers[i], { $merge: action.answer});
+      const i = state.response.answers.findIndex(a => a.code === action.answer.code)
+      let newAnswer = update(state.response.answers[i], { $merge: action.answer})
       state = update(state, {
         response: {
           answers: { $splice: [[i, 1, newAnswer]] }
@@ -39,39 +39,38 @@ export default function responseReducer(state = initialState, action) {
     
     case "get_form_success":
       let answers = [], validation = {}
-      let addAnswer = function(code, question, answer, required){
+      let addAnswer = function(code, question, answer, required, label=""){
         answers.push({
           code: code,
           question: question,
-          answer: answer
+          answer: answer,
+          label: label
         })
         validation[code] = { required: required };
       }
       action.form.contents.questions.forEach(function(question) {
-        if (question.type === "text" || question.type === "list"){
-          addAnswer(question.code, question.question, "", question.required)
-
-        } else if(question.type === "table"){
+        if (question.type === "table"){
           question.sub_questions.forEach(function(subQuestion) {
             if(question.columns.length > 1){
               question.columns.forEach(function(column) {
                 if(column.type !== "check"){
-                  addAnswer(subQuestion.value + column.code_suffix, 
+                  addAnswer(subQuestion.value + column.code_suffix,
                     `${subQuestion.text} (${column.header})`, "", subQuestion.required)
                 } else {
-                  addAnswer(subQuestion.value + column.code_suffix, 
-                    `${subQuestion.text} (${column.header})`, "n", subQuestion.required)
+                  addAnswer(subQuestion.value + column.code_suffix,
+                    `${subQuestion.text} (${column.header})`, "n", subQuestion.required, "No")
                 }
               })
             } else {
               if(question.columns[0].type !== "check") {
                 addAnswer(subQuestion.value, subQuestion.text, "", subQuestion.required)
               } else {
-                addAnswer(subQuestion.value, subQuestion.text, "n", subQuestion.required)
+                addAnswer(subQuestion.value, subQuestion.text, "n", subQuestion.required, "No")
               }
             }
           })
-        } else if(question.type === "file"){
+
+        } else {
           addAnswer(question.code, question.question, "", question.required)
         }
       })
